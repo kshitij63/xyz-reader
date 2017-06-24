@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -65,7 +66,6 @@ public class ArticleListActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        bundle1=ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
 
         Explode explode=new Explode();
         explode.setDuration(2000);
@@ -164,10 +164,14 @@ public class ArticleListActivity extends ActionBarActivity implements
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(ArticleListActivity.this,"in secong",Toast.LENGTH_SHORT).show();
 
-
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+Intent intent=new Intent(ArticleListActivity.this,ArticleDetailActivity.class);
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                    //startActivity(new Intent(Intent.ACTION_VIEW,
+                           // ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+            startActivity(intent,bundle1);
                 }
             });
             return vh;
@@ -205,7 +209,9 @@ public class ArticleListActivity extends ActionBarActivity implements
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
             holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                   // bundle1=ActivityOptions.makeSceneTransitionAnimation(this,holder.thumbnailView,holder.thumbnailView.getTransitionName()).toBundle();
+
+            mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
         }

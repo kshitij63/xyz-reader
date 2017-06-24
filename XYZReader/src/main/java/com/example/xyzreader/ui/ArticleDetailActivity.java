@@ -3,18 +3,22 @@ package com.example.xyzreader.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.transition.Slide;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.widget.Toast;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -38,9 +42,12 @@ public class ArticleDetailActivity extends ActionBarActivity
     private View mUpButtonContainer;
     private View mUpButton;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(this,"in secon",Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
+       // getWindow().setEnterTransition(new Slide());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
@@ -152,7 +159,8 @@ public class ArticleDetailActivity extends ActionBarActivity
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
-        public MyPagerAdapter(FragmentManager fm) {
+
+         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
